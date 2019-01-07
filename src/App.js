@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import "./App.css";
 
 import Maps from "./components/Maps";
 import Search from "./components/Search";
+import "./App.css";
 
 const url =
   "http://dadosabertos.rio.rj.gov.br/apiTransporte/apresentacao/rest/index.cfm/obterTodasPosicoes";
 
-const FAVORITE_LINES = ["881", "380", "390", "348"];
+const FAVORITE_LINES = ["881"];
 
 class App extends Component {
   state = { data: [], loaded: false };
@@ -41,19 +41,18 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1 className="App-title">Melhor Rota!</h1>
         <Search handleSearch={this.handleSearch} />
 
         {this.state.loaded ? (
-          <div>
-            <Maps
-              data={this.state.data}
-              googleMapURL="http://maps.googleapis.com/maps/api/js?key=AIzaSyAWcSOLNxa6D0j57nAkPDf0-p0Pg_LDTDg"
-              loadingElement={<div style={{ height: "100%" }} />}
-              containerElement={<div style={{ height: 600, marginTop: 16 }} />}
-              mapElement={<div style={{ height: "100%" }} />}
-            />
-          </div>
+          <Maps
+            data={this.state.data}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
+              process.env.REACT_APP_GOOGLE_MAPS_KEY
+            }`}
+            loadingElement={<div style={{ height: "100%" }} />}
+            containerElement={<div style={{ height: 600, marginTop: 16 }} />}
+            mapElement={<div style={{ height: "100%" }} />}
+          />
         ) : (
           <div style={{ width: 500, margin: "200px auto" }}>
             <p>Carregando...</p>
